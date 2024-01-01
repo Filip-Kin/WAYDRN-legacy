@@ -16,7 +16,7 @@ Copy paste your client email and private key into the app.js on line 23 & 24
 ### Getting the spreadsheet
 
 Make a copy of this [template](https://docs.google.com/spreadsheets/d/13kDO33IB1nm56qlHeq9o9EmHaJsOyPZ9Of2C10O83-E/edit?usp=sharing)
-Share it with your email, make sure it has editing rights
+Share it with your client email that you got while creating the API credentials, make sure it has editing rights
 
 ### The client-side
 
