@@ -22,6 +22,8 @@ function getDay(dateParam, timeParam) {
     try {
         const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID); // Document ID here
 
+        console.log(process.env.PRIVATE_KEY);
+
         // Your google API credentials here
         await doc.useServiceAccountAuth({
             client_email: process.env.CLIENT_EMAIL,
