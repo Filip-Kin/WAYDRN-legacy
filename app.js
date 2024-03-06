@@ -28,9 +28,6 @@ function getDay(dateParam, timeParam) {
             private_key = private_key.slice(1, -1);
         }
 
-        console.log(private_key);
-        console.log(process.env.PRIVATE_KEY);
-
         // Your google API credentials here
         await doc.useServiceAccountAuth({
             client_email: process.env.CLIENT_EMAIL,
@@ -40,43 +37,42 @@ function getDay(dateParam, timeParam) {
 
         waydrnSheet = doc.sheetsByIndex[0];
         hayfrnSheet = doc.sheetsByIndex[1];
+
+        app.get('/waydrn/:date/:time/:selection', async (req, res) => {
+            let info = getDay(req.params.date, req.params.time);
+            let date = info[0];
+            let day = info[1];
+            let time = info[2];
+    
+            console.log(`[${day} ${time}] 
+    WAYDRN ${req.params.selection - 1}`);
+            res.send('Recorded');
+            await waydrnSheet.loadCells({ startRowIndex: day, startColumnIndex: time + 2 });
+            waydrnSheet.getCell(day, time + 2).value = req.params.selection - 1;
+    
+    
+    
+            await waydrnSheet.saveUpdatedCells();
+        });
+    
+        app.get('/hayfrn/:date/:time/:selection', async (req, res) => {
+            let info = getDay(req.params.date, req.params.time);
+            let date = info[0];
+            let day = info[1];
+            let time = info[2];
+    
+            console.log(`[${day} ${time}] HAYFRN ${req.params.selection - 1}`);
+            res.send('Recorded');
+            await hayfrnSheet.loadCells({ startRowIndex: day, startColumnIndex: time + 2 });
+            hayfrnSheet.getCell(day, time + 2).value = req.params.selection - 1;
+    
+    
+    
+            await hayfrnSheet.saveUpdatedCells();
+        });
     } catch (e) {
         console.error(e);
     }
-    /*
-    app.get('/waydrn/:date/:time/:selection', async (req, res) => {
-        let info = getDay(req.params.date, req.params.time);
-        let date = info[0];
-        let day = info[1];
-        let time = info[2];
-
-        console.log(`[${day} ${time}] 
-WAYDRN ${req.params.selection - 1}`);
-        res.send('Recorded');
-        await waydrnSheet.loadCells({ startRowIndex: day, startColumnIndex: time + 2 });
-        waydrnSheet.getCell(day, time + 2).value = req.params.selection - 1;
-
-
-
-        await waydrnSheet.saveUpdatedCells();
-    });
-
-    app.get('/hayfrn/:date/:time/:selection', async (req, res) => {
-        let info = getDay(req.params.date, req.params.time);
-        let date = info[0];
-        let day = info[1];
-        let time = info[2];
-
-        console.log(`[${day} ${time}] HAYFRN ${req.params.selection - 1}`);
-        res.send('Recorded');
-        await hayfrnSheet.loadCells({ startRowIndex: day, startColumnIndex: time + 2 });
-        hayfrnSheet.getCell(day, time + 2).value = req.params.selection - 1;
-
-
-
-        await hayfrnSheet.saveUpdatedCells();
-    });
-    */
 
     app.get('/', (req, res) => {
         res.send('Hello World!');
