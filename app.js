@@ -18,15 +18,20 @@ function getDay(dateParam, timeParam) {
 }
 
 (async () => {
+    let waydrnSheet, hayfrnSheet;
+    try {
+        // Your google API credentials here
+        await doc.useServiceAccountAuth({
+            client_email: process.env.CLIENT_EMAIL,
+            private_key: process.env.PRIVATE_KEY,
+        });
+        await doc.loadInfo();
 
-    // Your google API credentials here
-    await doc.useServiceAccountAuth({
-        client_email: process.env.CLIENT_EMAIL,
-        private_key: process.env.PRIVATE_KEY,
-    });
-    await doc.loadInfo();
-    const waydrnSheet = doc.sheetsByIndex[0];
-    const hayfrnSheet = doc.sheetsByIndex[1];
+        waydrnSheet = doc.sheetsByIndex[0];
+        hayfrnSheet = doc.sheetsByIndex[1];
+    } catch (e) { 
+        console.error(e);
+    }
 
     app.get('/waydrn/:date/:time/:selection', async (req, res) => {
         let info = getDay(req.params.date, req.params.time);
