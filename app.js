@@ -35,6 +35,7 @@ function getDay(dateParam, timeParam) {
         console.error(e);
     }
 
+    /*
     app.get('/waydrn/:date/:time/:selection', async (req, res) => {
         let info = getDay(req.params.date, req.params.time);
         let date = info[0];
@@ -67,6 +68,7 @@ WAYDRN ${req.params.selection - 1}`);
 
         await hayfrnSheet.saveUpdatedCells();
     });
+    */
 
     app.listen(port, () => {
         console.log(`Example app listening on port ${port}`);
