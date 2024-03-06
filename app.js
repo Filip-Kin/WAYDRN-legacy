@@ -22,10 +22,15 @@ function getDay(dateParam, timeParam) {
     try {
         const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID); // Document ID here
 
+        let private_key = process.env.PRIVATE_KEY.replace(/\\n/g, '\n');
+        if (private_key.startsWith('"') && private_key.endsWith('"')) {
+            private_key = private_key.slice(1, -1);
+        }
+
         // Your google API credentials here
         await doc.useServiceAccountAuth({
             client_email: process.env.CLIENT_EMAIL,
-            private_key: (process.env.PRIVATE_KEY || "").replace(/\\n/g, '\n'),
+            private_key: private_key,
         });
         await doc.loadInfo();
 
