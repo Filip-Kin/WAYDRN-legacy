@@ -22,15 +22,19 @@ function getDay(dateParam, timeParam) {
     try {
         const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID); // Document ID here
 
-        let private_key = process.env.PRIVATE_KEY.replace(/\\n/g, '\n');
+        let private_key = process.env.PRIVATE_KEY;
+        private_key = private_key.replace(/\\n/g, '\n');
         if (private_key.startsWith('"') && private_key.endsWith('"')) {
             private_key = private_key.slice(1, -1);
         }
 
+        console.log(private_key);
+        console.log(process.env.PRIVATE_KEY);
+
         // Your google API credentials here
         await doc.useServiceAccountAuth({
             client_email: process.env.CLIENT_EMAIL,
-            private_key: private_key,
+            private_key: process.env.PRIVATE_KEY,
         });
         await doc.loadInfo();
 
@@ -39,7 +43,6 @@ function getDay(dateParam, timeParam) {
     } catch (e) {
         console.error(e);
     }
-
     /*
     app.get('/waydrn/:date/:time/:selection', async (req, res) => {
         let info = getDay(req.params.date, req.params.time);
@@ -74,6 +77,10 @@ WAYDRN ${req.params.selection - 1}`);
         await hayfrnSheet.saveUpdatedCells();
     });
     */
+
+    app.get('/', (req, res) => {
+        res.send('Hello World!');
+    });
 
     app.listen(port, () => {
         console.log(`Example app listening on port ${port}`);
