@@ -17,14 +17,11 @@ function getDay(dateParam, timeParam) {
 }
 
 (async () => {
+    let waydrnSheet, hayfrnSheet;
+
     try {
         const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID); // Document ID here
-    } catch (e) {
-        console.error(e);
-    }
-    /*
-    let waydrnSheet, hayfrnSheet;
-    try {
+
         // Your google API credentials here
         await doc.useServiceAccountAuth({
             client_email: process.env.CLIENT_EMAIL,
@@ -34,10 +31,10 @@ function getDay(dateParam, timeParam) {
 
         waydrnSheet = doc.sheetsByIndex[0];
         hayfrnSheet = doc.sheetsByIndex[1];
-    } catch (e) { 
+    } catch (e) {
         console.error(e);
     }
-
+    /*
     app.get('/waydrn/:date/:time/:selection', async (req, res) => {
         let info = getDay(req.params.date, req.params.time);
         let date = info[0];
