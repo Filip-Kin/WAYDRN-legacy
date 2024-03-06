@@ -34,7 +34,7 @@ function getDay(dateParam, timeParam) {
         // Your google API credentials here
         await doc.useServiceAccountAuth({
             client_email: process.env.CLIENT_EMAIL,
-            private_key: process.env.PRIVATE_KEY,
+            private_key: private_key,
         });
         await doc.loadInfo();
 
