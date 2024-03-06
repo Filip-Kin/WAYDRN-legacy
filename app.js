@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000; // Set your port if it's different
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const doc = new GoogleSpreadsheet('1Wy-54vI-l8dD-EZ_LTBgKdRT3DOh3YflAPzu4e9kT9Y'); // Document ID here
+const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID); // Document ID here
 
 function getDay(dateParam, timeParam) {
     let date = new Date(dateParam);
@@ -20,8 +20,8 @@ function getDay(dateParam, timeParam) {
 
     // Your google API credentials here
     await doc.useServiceAccountAuth({
-        client_email: "",
-        private_key: "",
+        client_email: process.env.CLIENT_EMAIL,
+        private_key: process.env.PRIVATE_KEY,
     });
     await doc.loadInfo();
     const waydrnSheet = doc.sheetsByIndex[0];
