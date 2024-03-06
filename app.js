@@ -2,8 +2,7 @@ const dotenv = require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000; // Set your port if it's different
-//const { GoogleSpreadsheet } = require('google-spreadsheet');
-//const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID); // Document ID here
+const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 function getDay(dateParam, timeParam) {
     let date = new Date(dateParam);
@@ -18,6 +17,11 @@ function getDay(dateParam, timeParam) {
 }
 
 (async () => {
+    try {
+        const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID); // Document ID here
+    } catch (e) {
+        console.error(e);
+    }
     /*
     let waydrnSheet, hayfrnSheet;
     try {
